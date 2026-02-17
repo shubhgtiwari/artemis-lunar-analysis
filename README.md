@@ -1,67 +1,60 @@
-# Artemis Lunar Sample Analysis
+# 🌙 Artemis Lunar Analysis — Apollo Sample Return Prediction
 
-NASA mission planning analysis - determining optimal sample collection targets for the Artemis program.
+Data analysis of **2,229 lunar rock samples** from six Apollo missions to predict **Artemis program sample return capacity** based on historical trends in module mass, sample weight, and rock type distribution.
 
-## The Problem
+*Built as part of Microsoft's "Explore Space with Python" learning path.*
 
-NASA is planning to return humans to the Moon through the Artemis program. With limited capacity for bringing samples back to Earth, astronauts need guidance on what to collect.
+## Key Findings
 
-The question: Given what we already have from the six Apollo missions (383 kg of lunar material), what should Artemis prioritize to maximize scientific value and fill gaps in our collection?
+### Sample Weight by Mission
 
-## Data Source
+| Mission | Samples (kg) | Weight Increase |
+|---------|-------------|-----------------|
+| Apollo 11 | 21.55 | — |
+| Apollo 12 | 34.34 | +12.79 kg |
+| Apollo 14 | 41.83 | +7.49 kg |
+| Apollo 15 | 75.40 | +33.57 kg |
+| Apollo 16 | 92.46 | +17.06 kg |
+| Apollo 17 | 109.44 | +16.98 kg |
+| **Total** | **375.04** | — |
 
-NASA Lunar Sample and Photo Catalog (curated by the Astromaterials Acquisition and Curation Office)
+### Rock Type Distribution
 
-Coverage: Apollo 11, 12, 14, 15, 16, and 17 missions
+| Type | Description |
+|------|-------------|
+| Soil | Unsieved lunar regolith |
+| Basalt | Volcanic rock (Ilmenite subtype) |
+| Core | Subsurface drill samples |
+| Breccia | Impact-fused regolith fragments |
 
-## Approach
+## Analysis Pipeline
 
-1. **Data Cleaning**: Converted weights from mixed grams/kilograms to unified metric (kg)
-2. **EDA**: Grouped samples by mission and rock type (Basalt, Breccia, Crustal, Soil, Core)
-3. **Strategic Planning**:
-   - Calculated total weight of existing samples
-   - Estimated Artemis mission capacity
-   - Developed recommendation algorithm for underrepresented rock types
+```
+NASA Lunar Catalog → 2,229 samples → Weight/Type analysis → Mission comparison
+    → Module mass correlation → Artemis capacity prediction
+```
 
-## Results
+1. **Data Loading:** `rocksamples.csv` (6 columns: ID, Mission, Type, Subtype, Weight, Pristine %)
+2. **Unit Conversion:** Grams → kilograms (×0.001)
+3. **Mission Aggregation:** GroupBy mission, sum weights, compute inter-mission differences
+4. **Module Analysis:** Command module and lunar module mass data from NASA NSSDCA
+5. **Correlation:** Sample weight vs. module mass trends across missions
+6. **Prediction:** Extrapolate Artemis sample return capacity from Orion/Starship specs
 
-- Analyzed 383 kg of existing lunar samples across six Apollo missions
-- Calculated Artemis should aim to collect approximately 71 kg of new material
-- Generated specific targets:
-  - **12 Basalt rocks**
-  - **34 Breccia rocks**
-  - **20 Crustal rocks**
-- Created data-driven collection priority list for mission planning
+## Dataset
 
-## Sample Distribution by Mission
-
-| Mission | Sample Weight |
-|---------|---------------|
-| Apollo 11 | 21.6 kg |
-| Apollo 12 | 34.3 kg |
-| Apollo 14 | 42.3 kg |
-| Apollo 15 | 77.3 kg |
-| Apollo 16 | 95.7 kg |
-| Apollo 17 | 110.5 kg |
+| Source | Records | Features |
+|--------|---------|----------|
+| NASA Lunar Sample Catalog | 2,229 samples | ID, Mission, Type, Subtype, Weight (g), Pristine (%) |
 
 ## Tech Stack
 
-- Python
-- Pandas
-- Matplotlib
+- **Language:** Python (Jupyter Notebook)
+- **Libraries:** pandas
+- **Data Source:** NASA Astromaterials Acquisition and Curation Office, NASA NSSDCA
 
-## Key Learnings
+## Skills Demonstrated
 
-There is something surreal about writing code that could theoretically influence what astronauts pick up on the Moon. Data science is not just about algorithms - it is about turning data into actionable recommendations. Even simple aggregation and percentage calculations become meaningful when they answer the right question.
-
-## Installation
-
-```bash
-git clone https://github.com/ShubhGTiwari/artemis-lunar-analysis.git
-cd artemis-lunar-analysis
-pip install -r requirements.txt
-```
-
-## Author
-
-**Shubham Tiwari** - Data Scientist & ML Engineer
+- **Data Analysis:** Aggregation, trend analysis, inter-mission comparisons
+- **Predictive Analysis:** Capacity extrapolation from historical trends
+- **Domain Knowledge:** Lunar geology, spacecraft module specifications, sample curation
